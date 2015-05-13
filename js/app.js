@@ -34,7 +34,7 @@
 				name: "Bogotá D.C.",
 				coords: new google.maps.LatLng(4.6486475, -74.0860243)
 			};
-			//$scope.cities.push($scope.bogota);
+			
 			$scope.cali={ 
 				name: "Cali",
 				coords: new google.maps.LatLng(3.431996, -76.531794)
@@ -58,9 +58,7 @@
 				value: "TRANSIT"}
 
 			];
-			$scope.setMode ($scope.modes[0].value);
-			//console.log($scope.modes[0].value);
-			
+			$scope.setMode ($scope.modes[0].value);						
 			$scope.cities=[$scope.bogota,$scope.cali,$scope.cartagena,$scope.medellin,$scope.chicago];
 			$scope.$apply();
 		  	$scope.start=$scope.chicago;
@@ -104,42 +102,28 @@
 
 		}
 		$scope.click = function() {
-        $scope.boolChangeClass = !$scope.boolChangeClass;
-        $scope.$apply();
-    }
+	        $scope.boolChangeClass = !$scope.boolChangeClass;
+	        $scope.$apply();
+    	};
 		
   		$scope.rotate90= function() {
-			  ///var heading = map.getHeading() || 0;
-			  //map.setHeading(heading + 90);
-			  map.setHeading(map.getHeading() + 90);
-			}
+			map.setHeading(map.getHeading() + 90);
+		};
 
 		$scope.setMode= function(mode){
-
 			$scope.sendMode=mode;
 		};
 
 		$scope.calcRoute = function () {
-		  //var start = document.getElementById('start').value;
-		  //var end = document.getElementById('end').value;
-		  //console.log($scope.waypoints);
-		  //console.log("stop: "+ $scope.stop);
+		 
 		  $scope.request = {
 		      origin:$scope.origin,
 		      destination:$scope.destination,
-		      //origin:"chicago, il",
-		      //destination:"oklahoma city, ok",
-		      //origin:$scope.start,
-		      //destination:$scope.stop,
-		      //travelMode: google.maps.TravelMode.DRIVING,
-		      travelMode: google.maps.TravelMode[$scope.sendMode],
+			  travelMode: google.maps.TravelMode[$scope.sendMode],
 		      waypoints: $scope.waypoints,
-		      optimizeWaypoints: true
-
-		      
+		      optimizeWaypoints: true		      
 		  };
-		  //console.log("request.origin: "+ $scope.request.origin);
-		  //console.log("request.destina: "+ $scope.request.destination);
+		  
 		  directionsService.route($scope.request, function(response, status) {
 		    if (status == google.maps.DirectionsStatus.OK) {
 		      directionsDisplay.setDirections(response);
@@ -149,7 +133,7 @@
 		    }
 		  });
 		  $scope.clearMarkers ();
-		}
+		};
 
 		 $scope.clearMarkers = function () {
 		    for (var i = 0; i < $scope.markers.length; i++) {
@@ -157,9 +141,7 @@
 		    }
 		  };
 		  $scope.setCenter = function (center) {
-		    map.setCenter(center);
-
-		    
+		    map.setCenter(center);		    
 		  };
 		  $scope.getDistance= function(values){
 		  	var temp=0;
@@ -168,32 +150,30 @@
 			});
 		  	$scope.distance=temp/1000;
 		  	$scope.$apply();
-		  }
-		   $scope.clearWaypoints = function() {
-		    
+		  };
+	   	$scope.clearWaypoints = function() {		    
 		    $scope.origin="";
 			$scope.destination="";  
 			$scope.waypoints=[];
 			$scope.markers=[];
 		    directionsVisible = false;
-		  }
-		  $scope.reset = function(){
-		  	$scope.clearMarkers ();		  
-		   $scope.boolChangeClass = false;
-		   $scope.distance=0;
-		    $scope.clearWaypoints();
-		    directionsDisplay.setMap(null);
-		    directionsDisplay.setPanel(null);
-		    directionsDisplay = new google.maps.DirectionsRenderer();
-		    directionsDisplay.setMap(map);
-		    directionsDisplay.setPanel(document.getElementById("map-canvas"));    
-  			directionsDisplay.setPanel(document.getElementById("directionsPanel"));  
-		  };
+	  	};
+		$scope.reset = function(){
+			$scope.clearMarkers ();		  
+	  		$scope.boolChangeClass = false;
+	  		$scope.distance=0;
+			$scope.clearWaypoints();
+			directionsDisplay.setMap(null);
+			directionsDisplay.setPanel(null);
+			directionsDisplay = new google.maps.DirectionsRenderer();
+			directionsDisplay.setMap(map);
+			directionsDisplay.setPanel(document.getElementById("map-canvas"));    
+			directionsDisplay.setPanel(document.getElementById("directionsPanel"));  
+  		};
 
 		google.maps.event.addDomListener(window, 'load', $scope.initialize);
 
-	})
-
+	});
 
 })();
 
