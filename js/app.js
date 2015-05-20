@@ -3,8 +3,9 @@
 	var app = angular.module('angularmaps',[])
 
 	.controller('mapsController', function($scope){
-		var directionsDisplay;
+		var directionsDisplay = new google.maps.DirectionsRenderer();
 		var directionsService = new google.maps.DirectionsService();
+		
 		var map;
 
 		$scope.start="";
@@ -65,8 +66,8 @@
 			$scope.stop=$scope.chicago;
 		  var mapOptions = {
 		  	heading: 180,
-		    zoom:12,
-		    center: $scope.bogota.coords
+		    	zoom:12,
+		    	center: $scope.bogota.coords
 		  };
 		  map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
@@ -117,11 +118,11 @@
 		$scope.calcRoute = function () {
 		 
 		  $scope.request = {
-		      origin:$scope.origin,
-		      destination:$scope.destination,
-			  travelMode: google.maps.TravelMode[$scope.sendMode],
-		      waypoints: $scope.waypoints,
-		      optimizeWaypoints: true		      
+		  	origin:$scope.origin,
+			destination:$scope.destination,
+			travelMode: google.maps.TravelMode[$scope.sendMode],
+		      	waypoints: $scope.waypoints,
+		      	optimizeWaypoints: true		      
 		  };
 		  
 		  directionsService.route($scope.request, function(response, status) {
